@@ -5,22 +5,17 @@
  */
 package io.swagger.api;
 
-import io.swagger.model.Payment;
 import io.swagger.annotations.*;
+import io.swagger.model.Payment;
+import io.swagger.model.PaymentProofResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2022-05-21T20:07:15.167Z")
 
 @Validated
@@ -36,6 +31,6 @@ public interface V1Api {
     @RequestMapping(value = "/v1/payments",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Void> addPayment(@ApiParam(value = "Payment object to create"  )  @Valid @RequestBody Payment body) throws InterruptedException;
+    ResponseEntity<PaymentProofResponse> addPayment(@ApiParam(value = "Payment object to create"  )  @Valid @RequestBody Payment body) throws InterruptedException;
 
 }

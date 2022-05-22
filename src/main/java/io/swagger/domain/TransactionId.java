@@ -1,3 +1,5 @@
 package io.swagger.domain;
 
-public record TransactionId(String value) { }
+import java.io.Serializable;
+
+public record TransactionId(String value) implements Serializable { }

@@ -1,14 +1,15 @@
 package io.swagger.infrastructure;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import io.swagger.domain.*;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import java.util.Date;
-import java.util.UUID;
 
 public class RedisPaymentProofs implements PaymentProofs {
 
@@ -24,9 +25,14 @@ public class RedisPaymentProofs implements PaymentProofs {
     @Override
     public void add(PaymentProof paymentProof) {
         try (Jedis jedis = this.pool.getResource()) {
-
-            jedis.set(this.baseName + paymentProof.getPaymentProofId().value(), paymentProof.toString());
+            RedisPaymentProof redisPaymentProof = PaymentProofMapper.mapPaymentProofToRedisPaymentProof(paymentProof);
+            ObjectMapper om = new ObjectMapper();
+            om.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(redisPaymentProof);
+            jedis.set(this.baseName + paymentProof.getPaymentProofId().value(), json);
         }catch (Exception e) {
+            System.out.println("erreur dans le add ---");
             System.out.println(e);
         }
     }
@@ -34,11 +40,16 @@ public class RedisPaymentProofs implements PaymentProofs {
     @Override
     public PaymentProof findById(String id) {
         try (Jedis jedis = this.pool.getResource()) {
-            String paymentProofStringify = jedis.get(this.baseName + id);
-            if(paymentProofStringify == null) return null;
-            return new ObjectMapper().readValue(paymentProofStringify , PaymentProof.class);
+            String redisPaymentProofStringify = jedis.get(this.baseName + id);
+            System.out.println("dans le findById ---");
+            System.out.println(redisPaymentProofStringify);
+            if(redisPaymentProofStringify == null) return null;
+            RedisPaymentProof redisPaymentProof = new ObjectMapper().readValue(redisPaymentProofStringify , RedisPaymentProof.class);
+            System.out.println(redisPaymentProof.toString());
+            return PaymentProofMapper.mapRedisPaymentProofToPaymentProof(redisPaymentProof);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("erreur dans le findById ---");
+            System.out.println(e);
         }
         return null;
     }

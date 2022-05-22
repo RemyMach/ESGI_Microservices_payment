@@ -25,7 +25,25 @@ public class PaymentProof {
         this.paymentStatus = paymentStatus;
     }
 
+    public TransactionId getTransactionId() {
+        return transactionId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
     public PaymentProofId getPaymentProofId() {
         return paymentProofId;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentProof{" +
+                "paymentProofId=" + paymentProofId +
+                ", paymentStatus=" + paymentStatus +
+                ", transactionId=" + transactionId +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

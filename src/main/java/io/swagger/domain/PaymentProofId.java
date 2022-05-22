@@ -1,3 +1,5 @@
 package io.swagger.domain;
 
-public record PaymentProofId(String value) { }
+import java.io.Serializable;
+
+public record PaymentProofId(String value) implements Serializable { }

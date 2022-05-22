@@ -10,11 +10,9 @@ import static java.lang.Thread.sleep;
 
 public final class CreatePaymentCommandHandler implements CommandHandler<CreatePayment, PaymentProof> {
 
-    private final Payment payment;
     private final PaymentProofs paymentProofs;
 
-    public CreatePaymentCommandHandler(Payment payment, PaymentProofs paymentProofs) {
-        this.payment = payment;
+    public CreatePaymentCommandHandler(PaymentProofs paymentProofs) {
         this.paymentProofs = paymentProofs;
     }
 
@@ -22,12 +20,14 @@ public final class CreatePaymentCommandHandler implements CommandHandler<CreateP
     public PaymentProof handle(CreatePayment createPayment) throws InterruptedException {
 
         PaymentProof paymentProofFromRepo = this.paymentProofs.findById(createPayment.id);
-        if(paymentProofFromRepo.getPaymentStatus().equals(PaymentStatus.PAYMENT_PROCESSING)) {
-            //return 400 paiement en cours
-        }
+        if(paymentProofFromRepo != null) {
+            if(paymentProofFromRepo.getPaymentStatus().equals(PaymentStatus.PAYMENT_PROCESSING)) {
+                throw new RuntimeException();
+            }
 
-        if(paymentProofFromRepo.getPaymentStatus().equals(PaymentStatus.PAYMENT_SUCCESS)) {
-            return paymentProofFromRepo;
+            if(paymentProofFromRepo.getPaymentStatus().equals(PaymentStatus.PAYMENT_SUCCESS)) {
+                return paymentProofFromRepo;
+            }
         }
 
         // on enregistre le paiement en DB avec un status processing
