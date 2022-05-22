@@ -1,5 +1,6 @@
 package com.esgi.microservice.microredis.domain;
 
-public interface Payments {
-
+public enum Currency {
+    EUR,
+    USD
 }

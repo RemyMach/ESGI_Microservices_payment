@@ -1,5 +1,3 @@
 package com.esgi.microservice.microredis.domain;
 
-public interface Payments {
-
-}
+public record PaymentProofId(String value) { }
