@@ -36,6 +36,6 @@ public interface V1Api {
     @RequestMapping(value = "/v1/payments",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Void> addPayment(@ApiParam(value = "Payment object to create"  )  @Valid @RequestBody Payment body);
+    ResponseEntity<Void> addPayment(@ApiParam(value = "Payment object to create"  )  @Valid @RequestBody Payment body) throws InterruptedException;
 
 }

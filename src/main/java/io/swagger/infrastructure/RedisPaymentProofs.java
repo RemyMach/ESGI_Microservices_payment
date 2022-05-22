@@ -1,11 +1,14 @@
-package com.esgi.microservice.microredis.infrastructure;
+package io.swagger.infrastructure;
 
-import com.esgi.microservice.microredis.domain.PaymentProof;
-import com.esgi.microservice.microredis.domain.PaymentProofId;
-import com.esgi.microservice.microredis.domain.PaymentProofs;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.domain.*;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.Date;
+import java.util.UUID;
 
 public class RedisPaymentProofs implements PaymentProofs {
 
@@ -22,7 +25,7 @@ public class RedisPaymentProofs implements PaymentProofs {
     public void add(PaymentProof paymentProof) {
         try (Jedis jedis = this.pool.getResource()) {
 
-            jedis.set(this.baseName + paymentProof.getPaymentProofId().value(), paymentProof.getPaymentProofId().value());
+            jedis.set(this.baseName + paymentProof.getPaymentProofId().value(), paymentProof.toString());
         }catch (Exception e) {
             System.out.println(e);
         }
@@ -31,11 +34,12 @@ public class RedisPaymentProofs implements PaymentProofs {
     @Override
     public PaymentProof findById(String id) {
         try (Jedis jedis = this.pool.getResource()) {
-            String idEntity = jedis.get(this.baseName + id);
-            return new PaymentProof(new PaymentProofId(idEntity));
+            String paymentProofStringify = jedis.get(this.baseName + id);
+            if(paymentProofStringify == null) return null;
+            return new ObjectMapper().readValue(paymentProofStringify , PaymentProof.class);
         }catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
         }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.esgi.microservice.microredis.domain;
+package io.swagger.domain;
 
 import java.math.BigDecimal;
 
