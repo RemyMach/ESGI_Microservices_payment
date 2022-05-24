@@ -30,7 +30,7 @@ public class RedisPaymentProofs implements PaymentProofs {
             om.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(redisPaymentProof);
-            jedis.set(this.baseName + paymentProof.getPaymentProofId().value(), json);
+            jedis.set(this.baseName + paymentProof.getPaymentProofId().id, json);
         }catch (Exception e) {
             System.out.println("erreur dans le add ---");
             System.out.println(e);

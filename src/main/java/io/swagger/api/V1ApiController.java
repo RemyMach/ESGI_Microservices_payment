@@ -5,6 +5,7 @@ import io.swagger.application.CreatePaymentCommandHandler;
 import io.swagger.domain.PaymentProof;
 import io.swagger.domain.PaymentProofs;
 import io.swagger.infrastructure.PaymentProofMapper;
+import io.swagger.kernel.exception.PaymentFailedException;
 import io.swagger.model.Payment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -39,14 +40,12 @@ public class V1ApiController implements V1Api {
         this.request = request;
     }
 
-    public ResponseEntity<PaymentProofResponse> addPayment(@ApiParam(value = "Payment object to create"  )  @Valid @RequestBody Payment body) throws InterruptedException {
+    public ResponseEntity<PaymentProofResponse> addPayment(@ApiParam(value = "Payment object to create"  )  @Valid @RequestBody Payment body) throws InterruptedException, PaymentFailedException {
         PaymentProof paymentProof = this.createPaymentCommandHandler.handle(new CreatePayment(body.getId().toString(), body.getBuyerInfo(), body.getAmount(), body.getCurrency(), body.getDate().toString(), body.getSellerAccount()));
         PaymentProofResponse paymentProofResponse = PaymentProofMapper.mapPaymentProofToPaymentProofResponse(paymentProof);
         System.out.println("paymentProofResponse dans le controller");
         System.out.println(paymentProofResponse.toString());
-        //return ResponseEntity.status(HttpStatus.CREATED).body(message);
         return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(paymentProofResponse);
-        //return new ResponseEntity<PaymentProofResponse>(paymentProofResponse, HttpStatus.valueOf(201));
     }
 
 }

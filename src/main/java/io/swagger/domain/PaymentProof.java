@@ -5,9 +5,7 @@ import java.time.ZonedDateTime;
 public class PaymentProof {
     PaymentProofId paymentProofId;
     PaymentStatus paymentStatus;
-
     TransactionId transactionId;
-
     String date;
 
     public PaymentProof(PaymentProofId paymentProofId, PaymentStatus paymentStatus, TransactionId transactionId, String date) {

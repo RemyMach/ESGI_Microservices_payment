@@ -1,6 +1,9 @@
-version: "3"
+version: "3.7"
+
 services:
   microredis:
+    networks:
+      - microservice_esgi
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,6 +11,12 @@ services:
       - 8080:8080
   redis:
     image: "redis"
+    networks:
+      - microservice_esgi
     ports:
       - 6379:6379
+networks:
+  microservice_esgi:
+    name: microservice_esgi
+    driver: bridge
 

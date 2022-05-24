@@ -9,7 +9,7 @@ import io.swagger.model.PaymentProofResponse;
 public class PaymentProofMapper {
 
     public static PaymentProofResponse mapPaymentProofToPaymentProofResponse(PaymentProof paymentProof) {
-        return new PaymentProofResponse(paymentProof.getTransactionId().value(), paymentProof.getDate());
+        return new PaymentProofResponse(paymentProof.getTransactionId().value, paymentProof.getDate());
     }
 
     public static PaymentProof mapRedisPaymentProofToPaymentProof(RedisPaymentProof redisPaymentProof) {
@@ -17,6 +17,6 @@ public class PaymentProofMapper {
     }
 
     public static RedisPaymentProof mapPaymentProofToRedisPaymentProof(PaymentProof paymentProof) {
-        return new RedisPaymentProof(paymentProof.getPaymentProofId().value(), paymentProof.getTransactionId().value(), paymentProof.getDate(), paymentProof.getPaymentStatus().getCode());
+        return new RedisPaymentProof(paymentProof.getPaymentProofId().id, paymentProof.getTransactionId().value, paymentProof.getDate(), paymentProof.getPaymentStatus().getCode());
     }
 }
