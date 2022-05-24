@@ -19,7 +19,7 @@ public class RedisPaymentProofs implements PaymentProofs {
         JedisPoolConfig poolCfg = new JedisPoolConfig();
         poolCfg.setMaxTotal(3);
 
-        this.pool = new JedisPool(poolCfg, "localhost", 6379, 500);
+        this.pool = new JedisPool(poolCfg, "redis", 6379, 500);
     }
 
     @Override
