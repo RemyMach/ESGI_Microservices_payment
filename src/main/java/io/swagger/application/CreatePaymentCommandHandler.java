@@ -4,10 +4,8 @@ import io.swagger.domain.*;
 import io.swagger.kernel.CommandHandler;
 import io.swagger.kernel.exception.PaymentFailedException;
 import io.swagger.kernel.exception.ServerInterruptButNotPaymentException;
-import io.swagger.model.Payment;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 import static java.lang.Thread.sleep;
@@ -22,6 +20,7 @@ public final class CreatePaymentCommandHandler implements CommandHandler<CreateP
 
     @Override
     public PaymentProof handle(CreatePayment createPayment) throws InterruptedException {
+
 
         PaymentProof paymentProofFromRepo = this.paymentProofs.findById(createPayment.id);
         if(paymentProofFromRepo != null) {

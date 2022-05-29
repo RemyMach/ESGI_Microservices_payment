@@ -6,6 +6,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import io.swagger.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -13,13 +16,24 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisPaymentProofs implements PaymentProofs {
 
+    @Value("${REDIS_HOST}")
+    private String host;
+
+    @Value("${REDIS_PORT}")
+    private int port;
+
+    @Value("${REDIS_TIMEOUT}")
+    private int timeout;
+
     private JedisPool pool;
     private final String baseName = "payment:";
     public RedisPaymentProofs() {
         JedisPoolConfig poolCfg = new JedisPoolConfig();
         poolCfg.setMaxTotal(3);
-
-        this.pool = new JedisPool(poolCfg, "redis", 6379, 500);
+        System.out.println(this.host);
+        System.out.println(this.port);
+        System.out.println(this.timeout);
+        this.pool = new JedisPool(poolCfg, "redis", 6379, 5000);
     }
 
     @Override
