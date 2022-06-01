@@ -1,7 +1,16 @@
 package com.esgi.kernel.exception;
 
+import java.time.OffsetDateTime;
+
 public class PaymentFailedException extends RuntimeException{
-    public PaymentFailedException(String message) {
+
+    private OffsetDateTime occuredAt;
+
+    public PaymentFailedException(String message, OffsetDateTime occuredAt) {
         super(message);
+    }
+
+    public OffsetDateTime getOccuredAt() {
+        return occuredAt;
     }
 }

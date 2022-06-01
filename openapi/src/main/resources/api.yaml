@@ -85,7 +85,6 @@ definitions:
         type: string
         format: ISO 4217 [4]
 # Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /MyGES/AIRFrench_payment/1.0.0
+host: localhost
 schemes:
-  - https
+  - http

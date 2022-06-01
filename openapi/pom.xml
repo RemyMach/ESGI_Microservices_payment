@@ -76,8 +76,8 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <apiPackage>com.microredis.generate.api</apiPackage>
-                            <modelPackage>com.microredis.generate.model</modelPackage>
+                            <apiPackage>com.esgi.api</apiPackage>
+                            <modelPackage>com.esgi.model</modelPackage>
                             <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 

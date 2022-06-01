@@ -30,7 +30,7 @@ public class RedisPaymentProofs implements PaymentProofs {
         System.out.println(this.host);
         System.out.println(this.port);
         System.out.println(this.timeout);
-        this.pool = new JedisPool(poolCfg, "redis", 6379, 5000);
+        this.pool = new JedisPool(poolCfg, "localhost", 6379, 5000);
     }
 
     @Override

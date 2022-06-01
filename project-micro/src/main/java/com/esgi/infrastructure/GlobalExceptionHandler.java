@@ -2,7 +2,7 @@ package com.esgi.infrastructure;
 
 import com.esgi.kernel.exception.PaymentFailedException;
 import com.esgi.kernel.exception.ServerInterruptButNotPaymentException;
-import com.microredis.generate.model.AddPayment400Response;
+import com.esgi.model.AddPayment400Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,12 +13,11 @@ import java.time.ZonedDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ServerInterruptButNotPaymentException.class)
-    public ResponseEntity<AddPayment400Response> serverInterruptHandler(RuntimeException ex) {
-        ex.printStackTrace();
+    public ResponseEntity<AddPayment400Response> serverInterruptHandler(ServerInterruptButNotPaymentException ex) {
         return ResponseEntity.badRequest()
                 .body(new AddPayment400Response()
                                 .codeError("PAYMENT_PROCESSING")
-                                .occurredDate(OffsetDateTime.from(ZonedDateTime.now()))
+                                .occurredDate(ex.getOccuredAt())
                                 .message(ex.getMessage())
                 );
 
@@ -26,7 +25,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PaymentFailedException.class)
     public ResponseEntity<AddPayment400Response> paymentFailedHandler(RuntimeException ex) {
-        ex.printStackTrace();
         return ResponseEntity.badRequest()
                 .body(new AddPayment400Response()
                         .codeError("PAYMENT_FAILED")

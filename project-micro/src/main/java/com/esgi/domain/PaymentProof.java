@@ -1,13 +1,15 @@
 package com.esgi.domain;
 
+import java.time.OffsetDateTime;
+
 public class PaymentProof {
 
     PaymentProofId paymentProofId;
     PaymentStatus paymentStatus;
     TransactionId transactionId;
-    String date;
+    OffsetDateTime date;
 
-    public PaymentProof(PaymentProofId paymentProofId, PaymentStatus paymentStatus, TransactionId transactionId, String date) {
+    public PaymentProof(PaymentProofId paymentProofId, PaymentStatus paymentStatus, TransactionId transactionId, OffsetDateTime date) {
         this.paymentProofId = paymentProofId;
         this.paymentStatus = paymentStatus;
         this.transactionId = transactionId;
@@ -26,7 +28,7 @@ public class PaymentProof {
         return transactionId;
     }
 
-    public String getDate() {
+    public OffsetDateTime getDate() {
         return date;
     }
 
