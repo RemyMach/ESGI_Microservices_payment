@@ -1,1 +1,10 @@
+### Mermaid schematic :
+
 [![](https://mermaid.ink/img/pako:eNqFklFLwzAQx7_KkacOtgedvhQZzHaTgsyyuqd1D2lzdUGblPSijnXf3dS2IuhYnkL43S_3v-TIci2Q-ezF8GoPz2GqwK2r7aZGs4PJZAZNYrNSEsT8UKKiBq63_RbmcdQzS6nEQEB2gChsYLpdo5A1VP1xZbQu6l13w_S7bu4ttXWVH5L2d5mZ1cTJ1hCvn4JFkkSrh9E3xr1BLRWhMbYiFKPfovv_RckmaEWdJbtgcUjgrTRB0aq6miYwyAl_op1t9ELcP-KbbdIplvPocRF2Y8y9SBXalGDd9OFdcsDPHCuSWo3OeG4HTx-1EwlvjWSNGvqO216cgo1ZiabkUrgnP7bKlNEeS0yZ77aCm9eUperkOFsJF3whJGnD_IK_1Thm3JJODipnPhmLAxRK7r5P2VOnLzwpwZY)](https://mermaid.live/edit#pako:eNqFklFLwzAQx7_KkacOtgedvhQZzHaTgsyyuqd1D2lzdUGblPSijnXf3dS2IuhYnkL43S_3v-TIci2Q-ezF8GoPz2GqwK2r7aZGs4PJZAZNYrNSEsT8UKKiBq63_RbmcdQzS6nEQEB2gChsYLpdo5A1VP1xZbQu6l13w_S7bu4ttXWVH5L2d5mZ1cTJ1hCvn4JFkkSrh9E3xr1BLRWhMbYiFKPfovv_RckmaEWdJbtgcUjgrTRB0aq6miYwyAl_op1t9ELcP-KbbdIplvPocRF2Y8y9SBXalGDd9OFdcsDPHCuSWo3OeG4HTx-1EwlvjWSNGvqO216cgo1ZiabkUrgnP7bKlNEeS0yZ77aCm9eUperkOFsJF3whJGnD_IK_1Thm3JJODipnPhmLAxRK7r5P2VOnLzwpwZY)
+
+When the user submit a new payment, the API checks if a payment with same unique ID has already been submitted to the Redis<br>
+If it exists, this payment will be interrupted
+
+If it does not exist, the payment will be created<br>
+If the creation is successful, the API returns a payment proof<br>
+If the creation fail, the user will be informed
