@@ -50,6 +50,14 @@ paths:
               message:
                 type: string
                 format: string
+        500:
+          description: internal server error
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
 
   /payments/{paymentId}:
     get:
@@ -72,6 +80,14 @@ paths:
             $ref: '#/definitions/Payment'
         404:
           description: Payment was not found
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+        500:
+          description: internal server error
           schema:
             type: object
             properties:
