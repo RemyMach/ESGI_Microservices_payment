@@ -13,24 +13,14 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisPaymentProofs implements PaymentProofs {
 
-    @Value("${REDIS_HOST}")
-    private String host;
-
-    @Value("${REDIS_PORT}")
-    private int port;
-
-    @Value("${REDIS_TIMEOUT}")
-    private int timeout;
-
+    private final RedisConfigurationProperties redisConfigurationProperties;
     private JedisPool pool;
     private final String baseName = "payment:";
-    public RedisPaymentProofs() {
+    public RedisPaymentProofs(RedisConfigurationProperties redisConfigurationProperties) {
+        this.redisConfigurationProperties = redisConfigurationProperties;
         JedisPoolConfig poolCfg = new JedisPoolConfig();
         poolCfg.setMaxTotal(3);
-        System.out.println(this.host);
-        System.out.println(this.port);
-        System.out.println(this.timeout);
-        this.pool = new JedisPool(poolCfg, "localhost", 6379, 5000);
+        this.pool = new JedisPool(poolCfg, redisConfigurationProperties.getRedisHost(), redisConfigurationProperties.getRedisPort(), redisConfigurationProperties.getRedisTimeout());
     }
 
     @Override
@@ -44,7 +34,7 @@ public class RedisPaymentProofs implements PaymentProofs {
             jedis.set(this.baseName + paymentProof.getPaymentProofId().id, json);
         }catch (Exception e) {
             System.out.println("erreur dans le add ---");
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -53,14 +43,12 @@ public class RedisPaymentProofs implements PaymentProofs {
         try (Jedis jedis = this.pool.getResource()) {
             String redisPaymentProofStringify = jedis.get(this.baseName + id);
             System.out.println("dans le findById ---");
-            System.out.println(redisPaymentProofStringify);
             if(redisPaymentProofStringify == null) return null;
             RedisPaymentProof redisPaymentProof = new ObjectMapper().readValue(redisPaymentProofStringify , RedisPaymentProof.class);
-            System.out.println(redisPaymentProof.toString());
             return PaymentProofMapper.mapRedisPaymentProofToPaymentProof(redisPaymentProof);
         }catch (Exception e) {
             System.out.println("erreur dans le findById ---");
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
         return null;
     }

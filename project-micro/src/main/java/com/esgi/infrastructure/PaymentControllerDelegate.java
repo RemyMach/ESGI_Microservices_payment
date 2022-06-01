@@ -45,7 +45,6 @@ public class PaymentControllerDelegate implements V1ApiDelegate {
             PaymentProof paymentProof = this.createPaymentCommandHandler.handle(new CreatePayment(body.getId().toString(), body.getBuyerInfo(), body.getAmount(), body.getCurrency(), body.getDate(), body.getSellerAccount()));
             AddPayment201Response addPayment201Response = PaymentProofMapper.mapPaymentProofToPaymentProofResponse(paymentProof);
             System.out.println("paymentProofResponse dans le controller");
-            System.out.println(addPayment201Response.toString());
             return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(addPayment201Response);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

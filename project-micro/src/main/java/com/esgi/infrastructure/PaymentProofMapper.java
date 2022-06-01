@@ -15,12 +15,6 @@ public class PaymentProofMapper {
 
     public static AddPayment201Response mapPaymentProofToPaymentProofResponse(PaymentProof paymentProof) {
         // string date to offset date time in java
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        System.out.println(paymentProof.getDate());
-        //OffsetDateTime time = OffsetDateTime.parse(paymentProof.getDate(), formatter);
-        //LocalDateTime dateTime = LocalDateTime.parse(paymentProof.getDate(), formatter);
-        //System.out.println(dateTime);
-        //System.out.println(time);
         return new AddPayment201Response()
                 .date(paymentProof.getDate())
                 .transactionId(UUID.fromString(paymentProof.getTransactionId().value));
