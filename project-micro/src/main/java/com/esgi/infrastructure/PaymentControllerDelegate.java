@@ -1,9 +1,9 @@
 package com.esgi.infrastructure;
 
+import com.esgi.api.PaymentsApiDelegate;
 import com.esgi.application.CreatePayment;
 import com.esgi.application.CreatePaymentCommandHandler;
 import com.esgi.domain.PaymentProof;
-import com.esgi.api.PaymentsApi;
 import com.esgi.model.AddPayment201Response;
 import com.esgi.model.Payment;
 import com.esgi.kernel.exception.PaymentFailedException;
@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.Valid;
 
 @Service
-public class PaymentControllerDelegate implements PaymentsApi {
-
-
+public class PaymentControllerDelegate implements PaymentsApiDelegate {
     private final CreatePaymentCommandHandler createPaymentCommandHandler;
 
     @Autowired
