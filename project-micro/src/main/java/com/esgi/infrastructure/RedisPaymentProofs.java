@@ -16,11 +16,9 @@ public class RedisPaymentProofs implements PaymentProofs {
     private final RedisConfigurationProperties redisConfigurationProperties;
     private JedisPool pool;
     private final String baseName = "payment:";
-    public RedisPaymentProofs(RedisConfigurationProperties redisConfigurationProperties) {
+    public RedisPaymentProofs(RedisConfigurationProperties redisConfigurationProperties, JedisPoolConfig jedisPoolConfig) {
         this.redisConfigurationProperties = redisConfigurationProperties;
-        JedisPoolConfig poolCfg = new JedisPoolConfig();
-        poolCfg.setMaxTotal(3);
-        this.pool = new JedisPool(poolCfg, redisConfigurationProperties.getRedisHost(), redisConfigurationProperties.getRedisPort(), redisConfigurationProperties.getRedisTimeout());
+        this.pool = new JedisPool(jedisPoolConfig, redisConfigurationProperties.getRedisHost(), redisConfigurationProperties.getRedisPort(), redisConfigurationProperties.getRedisTimeout());
     }
 
     @Override

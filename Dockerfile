@@ -15,4 +15,9 @@ COPY --from=builder /app/project-micro/target/project-micro*.jar project-micro.j
 
 EXPOSE 8080
 
+ENV REDIS_HOST=redis \
+    REDIS_PORT=6379 \
+    REDIS_TIMEOUT=5000
+
+
 ENTRYPOINT ["java" ,"-jar", "-Dspring.profiles.active=env", "/app/project-micro.jar"]

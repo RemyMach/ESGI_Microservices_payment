@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @ConfigurationPropertiesScan
@@ -21,7 +22,9 @@ public class PaymentConfiguration {
 
     @Bean
     PaymentProofs paymentProofs() {
-        return new RedisPaymentProofs(redisConfigurationProperties());
+        JedisPoolConfig poolCfg = new JedisPoolConfig();
+        poolCfg.setMaxTotal(3);
+        return new RedisPaymentProofs(redisConfigurationProperties(), poolCfg);
     }
 
     @Bean
