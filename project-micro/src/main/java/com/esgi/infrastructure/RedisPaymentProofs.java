@@ -16,6 +16,8 @@ public class RedisPaymentProofs implements PaymentProofs {
     private final RedisConfigurationProperties redisConfigurationProperties;
     private JedisPool pool;
     private final String baseName = "payment:";
+
+    private final int ttlForPaymentProofSeconds = 300;
     public RedisPaymentProofs(RedisConfigurationProperties redisConfigurationProperties, JedisPoolConfig jedisPoolConfig) {
         this.redisConfigurationProperties = redisConfigurationProperties;
         this.pool = new JedisPool(jedisPoolConfig, redisConfigurationProperties.getRedisHost(), redisConfigurationProperties.getRedisPort(), redisConfigurationProperties.getRedisTimeout());
@@ -29,7 +31,7 @@ public class RedisPaymentProofs implements PaymentProofs {
             om.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(redisPaymentProof);
-            jedis.set(this.baseName + paymentProof.getPaymentProofId().id, json);
+            jedis.setex(this.baseName + paymentProof.getPaymentProofId().id, this.ttlForPaymentProofSeconds ,json);
         }catch (Exception e) {
             System.out.println("erreur dans le add ---");
             System.out.println(e.getMessage());
