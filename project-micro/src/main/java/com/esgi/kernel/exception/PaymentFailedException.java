@@ -8,6 +8,7 @@ public class PaymentFailedException extends RuntimeException{
 
     public PaymentFailedException(String message, OffsetDateTime occuredAt) {
         super(message);
+        this.occuredAt = occuredAt;
     }
 
     public OffsetDateTime getOccuredAt() {

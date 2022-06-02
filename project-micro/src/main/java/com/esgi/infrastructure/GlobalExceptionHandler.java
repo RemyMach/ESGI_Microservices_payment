@@ -8,9 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ServerInterruptButNotPaymentException.class)
